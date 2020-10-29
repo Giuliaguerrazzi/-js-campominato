@@ -8,40 +8,52 @@
 
 var bombe = [];
 var size = 16;
+var possibilita = 84;
 
-var bombeNumber = bombeRandom(1, 100);
+var number = bombeRandom(1, 100);
 
-while (bombe.length < size) {
-  var bombeNumber = bombeRandom(1, 100)
+for (var i = 0; i < size; i++) {
+  var number = bombeRandom(1, 100);
 
-  if (! bombe.includes(bombeNumber ) ) {
-    bombe.push(bombeNumber);
+  if (! bombe.includes(number) ) {
+    bombe.push(number);
   }
-
 }
 
 console.log(bombe);
 
 // chiedi numero all'utente
-for (var i = 0; i < bombe; i++) {
-  var numTentativi = [];
-  var tentativo = parseInt( prompt('inserisci numero') );
-  while (isNan(tentativo)|| numTentativi.includes(tentativo)) {
-    tentativo = parseInt( prompt('valore non valido, riprova') );
+var tentativo = [];
+var utente = 0;
+
+while ( (tentativo.length < possibilita) && (bombe.includes(utente) !== true ) ) {
+  utente = parseInt( prompt('Inserisci un numero').trim() );
+  while (utente < 1 || utente > 100 || isNaN(utente)) {
+    utente = parseInt( prompt('Valore non valido, inserisci un numero').trim() );
+  }
+  if (tentativo.length === possibilita) {
+    alert('Hai vinto!');
   }
 
-  if (! bombe.includes(tentativo)) {
-    alert('nessuna bomba, puoi continuare');
-    numTentativi.push(tentativo);
-    counter++;
-  }
-  else {
-    alert('bomba trovata! hai perso!');
-    break;
-  }
 }
+
+console.log(tentativo);
+console.log(tentativo.length);
 
 // funzioni
 function bombeRandom(min, max) {
     return Math.floor( Math.random() * (max - min + 1 ) ) + min;
+}
+// controllo numero utente
+function controlloNumero(numero) {
+  if (bombe.includes(numero)) {
+    alert('Hai perso');
+  }
+  else if (tentativo.includes(numero) === true)  {
+    alert('Numero già inserito');
+  }
+  else if (tentativo.includes(numero) === false)  {
+    tentativo.push(numero);
+  }
+
 }
